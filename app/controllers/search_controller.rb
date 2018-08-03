@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   def index
     @rooms = Room.activated.near_by(params[:search_address], 5)
-      .by_prices(params[:price_min], params[:price_max])
+                 .by_prices(params[:price_min], params[:price_max])
     filtering_params(params).each do |key, value|
       @rooms = @rooms.filter_by(key, value) if value.present?
     end
