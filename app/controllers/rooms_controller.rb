@@ -10,6 +10,7 @@ class RoomsController < ApplicationController
     end
     @photos = @room.photos
     @guest_reviews = @room.guest_reviews
+    @near_by_rooms = @room.nearbys(10).activated
   end
 
   def index

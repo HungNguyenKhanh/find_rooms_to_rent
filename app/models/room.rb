@@ -8,13 +8,9 @@ class Room < ApplicationRecord
   scope :by_prices, ->(min_p, max_p){where(price: min_p..max_p) if
     min_p.present? && max_p.present?}
   scope :filter_by, ->(key, value){where("#{key}": value)}
-  scope :near, ->(address){
-    if address.present?
-      near(address, 5, order: "distance")
-    else
-      all
-    end
-  }
+  scope :near_by, ->(address, km){near(address, km, order: "distance") if 
+    address.present?}
+
   delegate :name, to: :user, allow_nil: true, prefix: true
 
   validates :home_type, presence: true

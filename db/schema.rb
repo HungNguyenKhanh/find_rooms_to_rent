@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180727021723) do
+ActiveRecord::Schema.define(version: 20180803091646) do
 
   create_table "photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "room_id"
@@ -89,6 +89,10 @@ ActiveRecord::Schema.define(version: 20180727021723) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "remember_digest"
+    t.string "uid"
+    t.string "provider"
+    t.string "oauth_token"
+    t.datetime "oauth_expires_at"
   end
 
   add_foreign_key "photos", "rooms"

@@ -2,12 +2,25 @@
   <div class="col-md-4 col-md-offset-4">
     <% provide :title, t("login") %>
     <h1><%= t "login" %></h1>
+
+    <%= link_to "/auth/facebook", class: "btn btn-facebook btn-block" do %>
+      <i class="fa fa-facebook-official fa-fw"></i><%=t "login_facebook"%>
+    <% end %>
+    <%= link_to "/auth/google_oauth2",
+      class: "btn btn-google btn-block" do %>
+      <i class="fa fa-google fa-fw"></i><%= t "login_google" %>
+    <% end %>
+
+    <hr class="hr-text" data-content="OR">
+
     <%= form_for(:session, url: login_path) do |f| %>
       <div class="form-group">
-        <%= f.email_field :email, autofocus: true, placeholder: t("email"), class: "form-control" %>
+        <%= f.email_field :email, autofocus: true, placeholder: t("email"),
+          class: "form-control" %>
       </div>
       <div class="form-group">
-        <%= f.password_field :password, autocomplete: "off", placeholder: t("password"), class: "form-control" %>
+        <%= f.password_field :password, autocomplete: "off",
+          placeholder: t("password"), class: "form-control" %>
       </div>
       <%= f.submit t("login"), class: "btn btn-normal btn-block" %>
     <% end %>

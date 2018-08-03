@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
   get "search", to: "search#index"
+  get '/auth/:provider/callback', to: "omniauth_callback#create"
+  get '/auth/failure', to: "omniauth_callback#failure"
   resources :users
   resources :rooms, except: [:edit] do
     member do
