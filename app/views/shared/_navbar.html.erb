@@ -43,6 +43,16 @@
           <li><%= link_to t(".login"), login_path %></li>
           <li><%= link_to t(".sign_up"), signup_path %></li>
         <% end %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                  role="button" aria-haspopup="true" aria-expanded="false">
+              <%= t "language" %>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to t("english"), change_locale_path(:en) %></li>
+              <li> <%= link_to t("vietnamese"), change_locale_path(:vi) %></li>
+            </ul>
+          </li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>

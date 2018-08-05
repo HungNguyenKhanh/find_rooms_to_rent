@@ -12,5 +12,4 @@ module ApplicationHelper
     return user.image if user.image.present?
     "unknown.jpg"
   end
-
 end
