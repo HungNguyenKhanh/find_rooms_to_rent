@@ -1,5 +1,5 @@
 class HostReviewsController < ApplicationController
-  before_action :check_reservation, :has_reviewed, only: [:create]
+  before_action :check_reservation, :has_reviewed?, only: [:create]
 
   def create
     @host_review = current_user.host_reviews.create host_review_params
@@ -32,18 +32,16 @@ class HostReviewsController < ApplicationController
       host_review_params[:room_id],
       host_review_params[:guest_id]
     ).first
-    if @reservation.nil?
-      flash[:alert] = t "noti_reservation_not_found"
-      return redirect_back fallback_location: request.referer
-    end
+    return if @reservation.present?
+    flash[:alert] = t "noti_reservation_not_found"
+    redirect_back fallback_location: request.referer
   end
 
-  def has_reviewed
+  def has_reviewed?
     @has_reviewed = HostReview.reviewed(@reservation.id,
       host_review_params[:guest_id]).first
-    unless @has_reviewed.nil?
-      flash[:alert] = t "noti_reviewed_reservation"
-      return redirect_back fallback_location: request.referer
-    end
+    return if @has_reviewed.present?
+    flash[:alert] = t "noti_reviewed_reservation"
+    redirect_back fallback_location: request.referer
   end
 end

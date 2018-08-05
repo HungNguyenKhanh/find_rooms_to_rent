@@ -74,11 +74,9 @@ class RoomsController < ApplicationController
   end
 
   def room_params
-    params.require(:room).permit(
-      :home_type, :room_type, :accommodate, :bed_room, :bath_room, :name,
-      :summary, :address, :is_tv, :is_kitchen, :is_air, :is_heating,
-      :is_internet, :price, :active
-    )
+    params.require(:room).permit :home_type, :room_type, :accommodate,
+      :bed_room, :bath_room, :name, :summary, :address, :is_tv, :is_kitchen,
+      :is_air, :is_heating, :is_internet, :price, :active
   end
 
   def is_authorised?
@@ -86,7 +84,7 @@ class RoomsController < ApplicationController
     current_user.id == @room.user_id
   end
 
-  def is_conflict(start_date, end_date, room)
+  def is_conflict start_date, end_date, room
     check = room.reservations.conflict_list start_date, end_date
     check.size > 0? true : false
   end

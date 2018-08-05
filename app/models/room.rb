@@ -5,11 +5,17 @@ class Room < ApplicationRecord
   has_many :guest_reviews
 
   scope :activated, ->{where(active: true)}
-  scope :by_prices, ->(min_p, max_p){where(price: min_p..max_p) if
-    min_p.present? && max_p.present?}
-  scope :filter_by, ->(key, value){where("#{key}": value)}
-  scope :near_by, ->(address, km){near(address, km, order: "distance") if 
-    address.present?}
+  scope :by_prices, ->(min_p, max_p) do
+    where(price: min_p..max_p) if min_p.present? && max_p.present?
+  end
+
+  scope :filter_by, ->(key, value) do
+    where("#{key}": value)
+  end
+
+  scope :near_by, ->(address, km) do
+    near(address, km, order: "distance") if address.present?
+  end
 
   delegate :name, to: :user, allow_nil: true, prefix: true
 
@@ -28,7 +34,7 @@ class Room < ApplicationRecord
   end
 
   def average_rating
-    guest_reviews.count == 0 ? 0 : guest_reviews.average(:star).round(2).to_i
+    guest_reviews.count.zero? ? 0 : guest_reviews.average(:star).round(2).to_i
   end
 
   def available? start_date, end_date
@@ -39,6 +45,6 @@ class Room < ApplicationRecord
       start_date, end_date,
       start_date, end_date,
       start_date, end_date
-    ).limit(1).length == 0
+    ).limit(1).empty?
   end
 end

@@ -8,7 +8,10 @@ class ReservationsController < ApplicationController
   def create
     room = Room.find_by id: params[:room_id]
 
-    return redirect_back fallback_location: request.referer, alert: t("noti_self_book") if current_user == room.user
+    if current_user == room.user
+      return redirect_back fallback_location: request.referer,
+        alert: t("noti_self_book")
+    end
     days = get_days
 
     @reservation = current_user.reservations.build reservation_params

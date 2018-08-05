@@ -34,19 +34,14 @@ class User < ApplicationRecord
     end
 
     def from_omniauth auth
-      user = User.where(email: auth.info.email).first
-      if user
-        return user
-      else
-        where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-          user.email = auth.info.email
-          user.password = SecureRandom.hex(6) if user.new_record?
-          user.name = auth.info.name
-          user.image = auth.info.image
-          user.uid = auth.uid
-          user.provider = auth.provider
-          user.save!
-        end
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+        user.password = SecureRandom.hex(6) if user.new_record?
+        user.name = auth.info.name
+        user.image = auth.info.image
+        user.uid = auth.uid
+        user.provider = auth.provider
+        user.save!
       end
     end
   end

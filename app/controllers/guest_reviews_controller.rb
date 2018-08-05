@@ -1,5 +1,5 @@
 class GuestReviewsController < ApplicationController
-  before_action :check_reservation, :has_reviewed, only: [:create]
+  before_action :check_reservation, :has_reviewed?, only: [:create]
 
   def create
     @guest_review = current_user.guest_reviews.create guest_review_params
@@ -31,18 +31,17 @@ class GuestReviewsController < ApplicationController
       guest_review_params[:reservation_id],
       guest_review_params[:room_id]
     ).first
-    if @reservation.nil? && @reservation.room.user.id == guest_review_params[:host_id].to_i
-      flash[:alert] = t "noti_reservation_not_found"
-      return redirect_back fallback_location: request.referer
-    end
+    return unless @reservation.present? &&
+                  @reservation.room.user.id !=
+                  guest_review_params[:host_id].to_i
+    flash[:alert] = t "noti_reservation_not_found"
   end
 
-  def has_reviewed
+  def has_reviewed?
     @has_reviewed = GuestReview.reviewed(@reservation.id,
       guest_review_params[:host_id]).first
-    unless @has_reviewed.nil?
-      flash[:alert] = t "noti_reviewed_reservation"
-      return redirect_back fallback_location: request.referer
-    end
+    return if @has_reviewed.present?
+    flash[:alert] = t "noti_reviewed_reservation"
+    redirect_back fallback_location: request.referer
   end
 end

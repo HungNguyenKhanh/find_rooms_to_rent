@@ -26,11 +26,10 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes user_params
       flash[:notice] = t "noti_saved"
-      redirect_back fallback_location: request.referer
     else
       flash[:alert] = t "noti_error"
-      redirect_back fallback_location: request.referer
     end
+    redirect_back fallback_location: request.referer
   end
 
   private
