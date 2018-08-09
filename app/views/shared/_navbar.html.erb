@@ -71,6 +71,9 @@
         <li <% if current_page? host_calendar_path %> class="active" <% end %> >
           <%= link_to t("host_calendar"), host_calendar_path %>
         </li>
+        <li <% if current_page? conversations_path %> class="active" <% end %> >
+          <%= link_to t("messages"), conversations_path %>
+        </li>
       </ul>
     </div>
   </nav>

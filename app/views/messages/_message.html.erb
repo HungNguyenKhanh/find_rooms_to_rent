@@ -1,0 +1,25 @@
+<div class="panel">
+  <div class="panel-body">
+    <% if current_user? message.user %>
+      <span class="pull-right">
+        <%= image_tag avatar_url(message.user), class: "img-circle avatar-medium" %>
+        <strong><%= message.user.name %></strong>
+      </span>
+      <div class="msg-send">
+        <%= message.context %>
+      </div>
+      <span class="pull-left"><%= message.message_time %></span>      
+      <br/>
+    <% else %>
+      <span class="pull-left">
+        <%= image_tag avatar_url(message.user), class: "img-circle avatar-medium" %>
+        <strong><%= message.user.name %></strong>
+      </span>
+      <div class="msg-receive">
+        <%= message.context %>
+      </div>
+      <span class="pull-right"><%= message.message_time %></span>
+      <br/>
+    <% end %>
+  </div>
+</div>

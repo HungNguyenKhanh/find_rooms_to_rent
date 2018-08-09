@@ -26,6 +26,7 @@ gem "paperclip", "~> 5.1.0"
 gem "puma", "~> 3.7"
 gem "rails", "~> 5.1.6"
 gem "rubocop", "~> 0.54.0", require: false
+gem "redis", "~> 3.0"
 gem "sass-rails", "~> 5.0"
 gem "toastr-rails", "~> 1.0"
 gem "turbolinks", "~> 5"

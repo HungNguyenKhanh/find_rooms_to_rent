@@ -19,3 +19,8 @@
 //= require toastr
 //= require moment 
 //= require fullcalendar
+//= require cable
+
+$(document).ready(function() {
+  $("#chat").scrollTop(9999999);
+});
