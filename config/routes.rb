@@ -1,19 +1,15 @@
 Rails.application.routes.draw do
+  devise_for :users, path: "",
+   path_names: {sign_in: "login", sign_out: "logout", edit: "profile",
+     sign_up: "registration"},
+   controllers: {omniauth_callbacks: "omniauth_callback",
+     registrations: "registrations", confirmations: "confirmations"}
   root "pages#home"
-  get "/signup", to: "users#new"
-  post "/signup", to: "users#create"
-  get "/login", to: "sessions#new"
-  post "/login", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
   get "search", to: "search#index"
-  get "/auth/:provider/callback", to: "omniauth_callback#create"
-  get "/auth/failure", to: "omniauth_callback#failure"
   get "/change_locale/:locale", to: "settings#change_locale", as: :change_locale
-  get "/auth/:provider/callback", to: "omniauth_callback#create"
-  get "/auth/failure", to: "omniauth_callback#failure"
   get "dashboard", to: "dashboards#index"
   get "host_calendar", to: "calendars#index"
-  resources :users
+  resources :users, only: [:show]
   resources :rooms, except: [:edit] do
     member do
       get "listing", to: "listings#edit"

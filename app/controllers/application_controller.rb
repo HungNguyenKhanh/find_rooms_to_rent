@@ -1,5 +1,9 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
+  include ApplicationHelper
+
   before_action :set_locale
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   def set_locale
     if cookies[:locale] &&
@@ -12,7 +16,11 @@ class ApplicationController < ActionController::Base
     I18n.locale = locale
   end
 
-  protect_from_forgery with: :exception
-  include SessionsHelper
-  include ApplicationHelper  
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name,
+      :phone_number])
+  end
 end

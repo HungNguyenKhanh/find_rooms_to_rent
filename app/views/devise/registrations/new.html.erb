@@ -1,0 +1,47 @@
+<% provide :title, t("sign_up") %>
+
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <h1 class="text-center"><%= t "sign_up" %></h1>
+
+    <%= link_to user_facebook_omniauth_authorize_path,
+      class: "btn btn-facebook btn-block" do %>
+      <i class="fa fa-facebook-official fa-fw"></i><%=t "continue_facebook"%>
+    <% end %>
+    <%= link_to user_google_oauth2_omniauth_authorize_path,
+      class: "btn btn-google btn-block" do %>
+      <i class="fa fa-google fa-fw"></i><%= t "continue_google" %>
+    <% end %>
+
+    <hr class="hr-text" data-content="OR">
+
+    <%= form_for(resource, as: resource_name,
+        url: registration_path(resource_name)) do |f| %>
+      <%= render "shared/devisemes" %>
+
+      <div class="form-group">
+        <%= f.text_field :name, autofocus: true, placeholder: t("name"),
+          class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",
+          placeholder: t("email"), class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.password_field :password, autocomplete: "off",
+          placeholder: t("password"), class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.password_field :password_confirmation, autocomplete: "off",
+          placeholder: t("password_confirm"), class: "form-control" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit t("create_account"), class: "btn btn-normal btn-block" %>
+      </div>
+    <% end %>
+  </div>
+</div>
